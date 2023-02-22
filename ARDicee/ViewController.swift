@@ -23,10 +23,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
 
         // Set the scene to the view
-        sceneView.scene = scene
+//        sceneView.scene = scene
+        
+        createCube()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +48,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
+    func createCube(){
     
+        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01) // creating a new brand cube
+        
+        let material = SCNMaterial() //created material to give color to our cube
+        
+        material.diffuse.contents = UIColor.red // given color
+        
+        cube.materials = [material]// added color
+        
+        let node = SCNNode() //created a node to see in camera in realworld
+        
+        node.position = SCNVector3(x: 0, y: 0.1, z: -0.5) //identify position
+        
+        node.geometry = cube //passed cube
+        
+        sceneView.scene.rootNode.addChildNode(node) //add node
+        sceneView.autoenablesDefaultLighting = true
+        
+        
+    }
    
 }
