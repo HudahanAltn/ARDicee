@@ -54,6 +54,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {//methos tell us touching began
+        
+        if let touch = touches.first{ // we take first touch from array
+            
+            let touchLocation = touch.location(in: sceneView)//where?
+            
+         
+            let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingGeometry) //hit test
+
+            if !results.isEmpty{
+                print("touched the plane")
+            }else{
+                print("touch somewhere else")
+            }
+
+            if let hitResult = results.first{ // when we touch the plane then dicee will created
+                
+                print(hitResult)
+                createDice(hitTestResult: hitResult)
+            }
+            
+        }
+    }
   
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {//we take the detected surface as anchor
         
@@ -95,21 +118,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
 extension ViewController{
     
-    func createDice(){
+    func createDice(hitTestResult:ARHitTestResult){
         
         let diceScene = SCNScene(named: "art.scnassets/diceCollada.scn")
         
         if let diceNode = diceScene?.rootNode.childNode(withName: "Dice", recursively: true){
             
-            diceNode.position = SCNVector3(x: 0, y: 0.1, z: -0.1)
+            diceNode.position = SCNVector3(x: hitTestResult.worldTransform.columns.3.x
+                                           , y: hitTestResult.worldTransform.columns.3.y + diceNode.boundingSphere.radius
+                                           , z: hitTestResult.worldTransform.columns.3.z)
             
             sceneView.scene.rootNode.addChildNode(diceNode)
             sceneView.autoenablesDefaultLighting = true
         }
         
-        
-    
     }
+
+    
+    
 
 }
 
