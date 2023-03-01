@@ -25,6 +25,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Dice" id="wlt-Cm-Vwq">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="trash" catalog="system" id="9AW-FQ-fjC">
+                            <connections>
+                                <action selector="removeAllDice:" destination="BV1-FR-VrT" id="zO9-9z-E3J"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="bnw-lS-gui">
                             <connections>
                                 <action selector="rollAgain:" destination="BV1-FR-VrT" id="kka-GC-ftD"/>
@@ -59,6 +64,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
