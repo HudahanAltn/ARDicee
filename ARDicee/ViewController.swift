@@ -130,7 +130,24 @@ extension ViewController{
             
             sceneView.scene.rootNode.addChildNode(diceNode)
             sceneView.autoenablesDefaultLighting = true
+            
+            rollDice(node: diceNode)
         }
+        
+    }
+    
+    func rollDice(node:SCNNode){
+        
+        //we need to rotate angle
+        let randomX = Float((arc4random_uniform(4) + 1)) * (Float.pi/2) // pi/2 & pi & 3pi/2 & 2pi
+        
+        let randomZ = Float((arc4random_uniform(4) + 1)) * (Float.pi/2) // pi/2 & pi & 3pi/2 & 2pi
+    
+        //rotate func
+        node.runAction(
+            SCNAction.rotateBy(x: CGFloat(randomX * 5), y: 0, z: CGFloat(randomZ * 5), duration: 0.5)
+            
+        )
         
     }
 
