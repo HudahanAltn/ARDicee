@@ -13,6 +13,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    var diceArray:[SCNNode] = [SCNNode] ()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,7 +114,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
         
-
+    @IBAction func rollAgain(_ sender: UIBarButtonItem) {
+        
+        rollAllDice()
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {//add anather roll method .this method run when phone shake
+        rollAllDice()
+    }
+    
 }
 
 extension ViewController{
@@ -128,6 +137,8 @@ extension ViewController{
                                            , y: hitTestResult.worldTransform.columns.3.y + diceNode.boundingSphere.radius
                                            , z: hitTestResult.worldTransform.columns.3.z)
             
+            
+            diceArray.append(diceNode)
             sceneView.scene.rootNode.addChildNode(diceNode)
             sceneView.autoenablesDefaultLighting = true
             
@@ -151,7 +162,15 @@ extension ViewController{
         
     }
 
-    
+    func rollAllDice(){
+        
+        if !diceArray.isEmpty{
+            
+            for dice in diceArray{
+                rollDice(node: dice)
+            }
+        }
+    }
     
 
 }
