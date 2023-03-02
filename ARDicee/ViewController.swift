@@ -34,6 +34,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 //        createDice()
    
     }
+//MARK: - İOS lifecycle method
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -53,6 +54,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+//MARK: - UIKit-UIResponder methods
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {//add anather roll method .this method run when phone shake
+        rollAllDice()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {//methos tell us touching began
@@ -78,7 +84,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
         }
     }
-  
+//MARK: - ARSCN method
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {//we take the detected surface as anchor
         
         if anchor is ARPlaneAnchor{// we need planeAnchor because we want to detect horizontal surface
@@ -102,8 +108,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             plane.materials = [gridMaterial]
             
             planeNode.geometry = plane
-            
-            
         
             node.addChildNode(planeNode)
             
@@ -113,7 +117,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
     }
-        
+    
+    
+//MARK: - BUTTON method
+    
     @IBAction func rollAgain(_ sender: UIBarButtonItem) {
         
         rollAllDice()
@@ -130,12 +137,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {//add anather roll method .this method run when phone shake
-        rollAllDice()
-    }
+
     
 }
 
+//MARK: -  dice method
 extension ViewController{
     
     func createDice(hitTestResult:ARHitTestResult){
